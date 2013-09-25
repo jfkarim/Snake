@@ -1,0 +1,24 @@
+ul {
+  margin: 0 auto;
+  padding: 0;
+  width: 500;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: gray;
+  border: 1px solid black;
+  height: 8px;
+  width: 8px;
+  float: left;
+}
+
+.snakeCell {
+  background-color: blue;
+}
+
+.appleCell {
+  background-color: red;
+}
