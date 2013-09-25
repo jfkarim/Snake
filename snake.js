@@ -1,16 +1,16 @@
 (function(root) {
   var Sn = root.Sn = (root.Sn || {});
 
-  var Coord = Sn.Coord = function(coord) {
-    this.coord = [null,null];
-    this.coord[0] = coord[0];
-    this.coord[1] = coord[1];
-  }
-
-  Coord.prototype.plus = function(dir) {
-    this.coord[0] += dir[0];
-    this.coord[1] += dir[1];
-  }
+  // var Coord = Sn.Coord = function(coord) {
+//     this.coord = [null,null];
+//     this.coord[0] = coord[0];
+//     this.coord[1] = coord[1];
+//   }
+//
+//   Coord.prototype.plus = function(dir) {
+//     this.coord[0] += dir[0];
+//     this.coord[1] += dir[1];
+//   }
 
   var Snake = Sn.Snake = function(dir, segments) {
     this.dir = dir; // N, E, S, W
@@ -24,10 +24,10 @@
   }
 
   Snake.prototype.move = function() {
-    that = this;
     this.segments.pop();
-    newSeg = new Coord(that.segments[0].coord);
-    newSeg.plus(that.compass[that.dir]);
+    newSeg = [this.segments[0][0], this.segments[0][1]];
+    newSeg[0] += this.compass[this.dir][0];
+    newSeg[1] += this.compass[this.dir][1];
     this.segments.unshift(newSeg);
   }
 
@@ -40,9 +40,9 @@
   var Board = Sn.Board = function() {
 
     var segments = [
-      new Coord([25, 24]),
-      new Coord([25, 25]),
-      new Coord([25, 26])
+      [25, 24],
+      [25, 25],
+      [25, 26]
     ];
     this.snake = new Snake('W', segments);
 
@@ -60,7 +60,7 @@
     }
     // console.log(grid);
     this.snake.segments.forEach(function(segment) {
-      grid[segment.coord[0]][segment.coord[1]] = 'S';
+      grid[segment[0]][segment[1]] = 'S';
     });
 
     for (var i = 0; i < Board.MAX_SIZE; i++) {

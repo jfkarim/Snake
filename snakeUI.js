@@ -12,20 +12,23 @@ $(document).ready( function() {
     }
   }
 
-
-
   var View = function (el) {
     this.$el = el;
   }
 
+  View.prototype.clearBoard = function() {
+    $('li').removeClass('snakeCell appleCell');
+  }
+
   View.prototype.parseRenderedBoard = function() {
+    this.clearBoard();
     snake = this.board.snake
     // console.log(snake);
     // console.log(snake.segments);
     snake.segments.forEach(function(segment) {
       // console.log($('#grid:nth-child('+ segment.coord[0] +')'));
-      $row = $('#grid ul:nth-child('+ segment.coord[0] +')');
-      cell = $row.children()[segment.coord[1]];
+      $row = $('#grid ul:nth-child('+ segment[0] +')');
+      cell = $row.children()[segment[1]];
       $(cell).addClass('snakeCell');
     });
   }
@@ -50,7 +53,7 @@ $(document).ready( function() {
     key('s', function() { snake.turn('S'); });
     key('d', function() { snake.turn('E'); });
 
-    this.startTimeInd = setInterval(this.step.bind(this), 500);
+    this.startTimeInd = setInterval(this.step.bind(this), 300);
   }
 
   View.prototype.stop = function() {
