@@ -48,6 +48,7 @@ $(document).ready( function() {
 
   View.prototype.step = function() {
     this.board.snake.move();
+    this.board.ateApple();
     this.parseRenderedBoard();
     if (this.board.snake.lost) {
       console.log('LOSER!!');
