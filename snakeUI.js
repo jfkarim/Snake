@@ -35,13 +35,13 @@ $(document).ready( function() {
 
     apples.forEach(function(apple) {
       $row = $('#grid ul:nth-child('+ (apple[0]+1) +')');
-      cell = $row.children()[(apple[1]+1)];
+      cell = $row.children()[apple[1]];
       $(cell).addClass('appleCell');
     });
 
     snake.segments.forEach(function(segment) {
       $row = $('#grid ul:nth-child('+ (segment[0]+1) +')');
-      cell = $row.children()[(segment[1]+1)];
+      cell = $row.children()[segment[1]];
       $(cell).addClass('snakeCell');
     });
   }

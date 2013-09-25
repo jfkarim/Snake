@@ -39,6 +39,18 @@
     newSeg = [this.segments[0][0], this.segments[0][1]];
     newSeg[0] += this.compass[this.dir][0];
     newSeg[1] += this.compass[this.dir][1];
+    if (newSeg[0] > 49) {
+      newSeg[0] -= 50;
+    } else if (newSeg[0] < 0) {
+      newSeg[0] += 50;
+    }
+
+    if (newSeg[1] > 49) {
+      newSeg[1] -= 50;
+    } else if (newSeg[1] < 0) {
+      newSeg[1] += 50;
+    }
+
     if (this.isCollidedWith(newSeg)) {
       this.lost = true;
     }
