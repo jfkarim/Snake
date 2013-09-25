@@ -16,6 +16,14 @@ $(document).ready( function() {
     this.$el = el;
   }
 
+  View.prototype.addApple = function() {
+    appleCoord = [Math.floor(Math.random() * 50),
+                  Math.floor(Math.random() * 50)];
+    if (!this.board.snake.isCollidedWith(appleCoord)) {
+      this.board.apples.push(appleCoord);
+    }
+  }
+
   View.prototype.clearBoard = function() {
     $('li').removeClass('snakeCell appleCell');
   }
@@ -23,23 +31,28 @@ $(document).ready( function() {
   View.prototype.parseRenderedBoard = function() {
     this.clearBoard();
     snake = this.board.snake
-    // console.log(snake);
-    // console.log(snake.segments);
+    apples = this.board.apples
+
+    apples.forEach(function(apple) {
+      $row = $('#grid ul:nth-child('+ (apple[0]+1) +')');
+      cell = $row.children()[(apple[1]+1)];
+      $(cell).addClass('appleCell');
+    });
+
     snake.segments.forEach(function(segment) {
-      // console.log($('#grid:nth-child('+ segment.coord[0] +')'));
-      $row = $('#grid ul:nth-child('+ segment[0] +')');
-      cell = $row.children()[segment[1]];
+      $row = $('#grid ul:nth-child('+ (segment[0]+1) +')');
+      cell = $row.children()[(segment[1]+1)];
       $(cell).addClass('snakeCell');
     });
   }
 
   View.prototype.step = function() {
-    // each game step
     this.board.snake.move();
-
     this.parseRenderedBoard();
-    // var renderedBoard = this.board.render();
-    // this.$el.html(renderedBoard);
+    if (this.board.snake.lost) {
+      console.log('LOSER!!');
+      this.stop();
+    }
   }
 
   View.prototype.start = function () {
@@ -53,7 +66,8 @@ $(document).ready( function() {
     key('s', function() { snake.turn('S'); });
     key('d', function() { snake.turn('E'); });
 
-    this.startTimeInd = setInterval(this.step.bind(this), 300);
+    this.startTimeInd = setInterval(this.step.bind(this), 50);
+    setInterval(this.addApple.bind(this), 2000);
   }
 
   View.prototype.stop = function() {

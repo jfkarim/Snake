@@ -21,6 +21,17 @@
       'E' : [0,1],
       'W' : [0,-1]
     }
+    this.lost = false;
+  }
+
+  Snake.prototype.isCollidedWith = function(coord) {
+    for (var i = 0; i < this.segments.length; i++) {
+      if (this.segments[i][0] === coord[0] && this.segments[i][1] === coord[1]) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   Snake.prototype.move = function() {
@@ -28,6 +39,9 @@
     newSeg = [this.segments[0][0], this.segments[0][1]];
     newSeg[0] += this.compass[this.dir][0];
     newSeg[1] += this.compass[this.dir][1];
+    if (this.isCollidedWith(newSeg)) {
+      this.lost = true;
+    }
     this.segments.unshift(newSeg);
   }
 
@@ -37,6 +51,8 @@
     }
   }
 
+
+
   var Board = Sn.Board = function() {
 
     var segments = [
@@ -45,7 +61,7 @@
       [25, 26]
     ];
     this.snake = new Snake('W', segments);
-
+    this.apples = [];
   }
 
   Board.MAX_SIZE = 50
