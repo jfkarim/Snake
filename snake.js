@@ -32,7 +32,9 @@
   }
 
   Snake.prototype.turn = function(direction) {
-    this.dir = direction;
+    if (this.compass[this.dir][1] + this.compass[direction][1] !== 0) {
+      this.dir = direction;
+    }
   }
 
   var Board = Sn.Board = function() {
