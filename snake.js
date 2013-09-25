@@ -2,7 +2,9 @@
   var Sn = root.Sn = (root.Sn || {});
 
   var Coord = Sn.Coord = function(coord) {
-    this.coord = coord
+    this.coord = [null,null];
+    this.coord[0] = coord[0];
+    this.coord[1] = coord[1];
   }
 
   Coord.prototype.plus = function(dir) {
@@ -24,7 +26,7 @@
   Snake.prototype.move = function() {
     that = this;
     this.segments.pop();
-    newSeg = new Coord(segments[0]);
+    newSeg = new Coord(that.segments[0].coord);
     newSeg.plus(that.compass[that.dir]);
     this.segments.unshift(newSeg);
   }
