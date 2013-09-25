@@ -14,10 +14,10 @@
     this.dir = dir; // N, E, S, W
     this.segments = segments; //will have inital lenth of segments
     this.compass = {
-      'N' : [0,-1],
-      'S' : [0,1],
-      'E' : [1,0],
-      'W' : [-1,0]
+      'N' : [-1,0],
+      'S' : [1,0],
+      'E' : [0,1],
+      'W' : [0,-1]
     }
   }
 
@@ -34,27 +34,36 @@
   }
 
   var Board = Sn.Board = function() {
+
     var segments = [
-      new Coord([249, 250]),
-      new Coord([250, 250]),
-      new Coord([251, 250])
+      new Coord([25, 24]),
+      new Coord([25, 25]),
+      new Coord([25, 26])
     ];
     this.snake = new Snake('W', segments);
 
   }
 
+  Board.MAX_SIZE = 50
+
   Board.prototype.render = function() {
-    grid = new Array(100);
-    grid.forEach(function(row) {
-      row = new Array(100);
-      row.forEach(function(element){
-        element = ".";
-      });
-    });
+    var grid = []
+    for (var i = 0; i < Board.MAX_SIZE; i++) {
+      grid.push(new Array(Board.MAX_SIZE));
+      for (var j = 0; j < Board.MAX_SIZE; j++) {
+        grid[i][j] = '.';
+      }
+    }
+    // console.log(grid);
     this.snake.segments.forEach(function(segment) {
-      grid[segment[0]][segment[1]] = 'S'
+      grid[segment.coord[0]][segment.coord[1]] = 'S';
     });
-    return grid;
+
+    for (var i = 0; i < Board.MAX_SIZE; i++) {
+      grid[i] = grid[i].join("");
+    }
+
+    return grid.join("\n");
   }
 
 })(this);
